@@ -1,0 +1,44 @@
+flowchart LR
+    USR(("Usuario"))
+    CAJ(("Cajero"))
+    ALM(("Almacenista"))
+    TRI(("Encargado de<br/>tripulacion"))
+    COM(("Comandante"))
+    PAY[["PayPal"]]
+    SMTP[["Correo SMTP"]]
+
+    subgraph ACC["Acceso"]
+        U1([Iniciar sesion])
+        U2([Cerrar sesion])
+    end
+    subgraph VEN["Ventas"]
+        V1([Registrar venta])
+        V2([Cobrar con PayPal])
+        V3([Descargar factura XML])
+        V4([Enviar factura por correo])
+        V5([Gestionar clientes Amaze])
+    end
+    subgraph INV["Inventario, Compras y Proveedores"]
+        I1([Gestionar productos])
+        I2([Registrar entrada y merma])
+        C1([Generar manifiesto de carga])
+        C2([Recibir y pagar manifiesto])
+        C3([Gestionar proveedores])
+    end
+    subgraph RH["RRHH"]
+        R1([Gestionar tripulantes])
+        R2([Asignar rotaciones])
+    end
+    subgraph ADM["Finanzas y administracion"]
+        F1([Consultar balance y reportes])
+        F2([Registrar movimiento])
+        A1([Gestionar usuarios y roles])
+    end
+
+    USR --- U1 & U2
+    CAJ --- V1 & V2 & V3 & V4 & V5
+    ALM --- I1 & I2 & C1 & C2 & C3
+    TRI --- R1 & R2
+    COM --- F1 & F2 & A1
+    V2 --- PAY
+    V4 --- SMTP

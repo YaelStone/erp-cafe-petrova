@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor C as Cajero
+    participant A as Angular (ventas)
+    participant R as venta.routes
+    participant F as factura.service
+    participant DB as MySQL
+    participant N as Nodemailer
+    participant S as Servidor SMTP
+    actor CL as Cliente
+
+    C->>A: clic en Enviar (venta PL-n)
+    A->>R: POST /api/ventas/n/enviar
+    R->>F: enviarFactura(n)
+    F->>DB: venta + cliente + cajero
+    F->>DB: detalle con codigo y precio
+    F->>F: generarXml() Emisor, Receptor, Conceptos, IVA, Totales
+    F->>F: valida correo del cliente
+    F->>N: sendMail(adjunto factura-PL-n.xml)
+    N->>S: SMTP (Gmail o Ethereal)
+    S-->>N: 250 OK + messageId
+    S--)CL: correo con la factura XML
+    F-->>R: destino, messageId, vistaPrevia
+    R-->>A: 200 Factura enviada a correo
+    Note over C,A: El boton XML usa GET /api/ventas/n/xml<br/>y descarga el mismo archivo

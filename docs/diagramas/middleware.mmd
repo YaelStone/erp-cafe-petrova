@@ -1,0 +1,17 @@
+flowchart TB
+    A([Peticion a /api/...]) --> B[cors: solo origen 4200<br/>con credenciales]
+    B --> C[express.json + cookieParser]
+    C --> D[cabeceras: nosniff,<br/>X-Frame-Options DENY, no-referrer]
+    D --> E{¿Ruta publica?<br/>login / logout}
+    E -- Si --> L[limitarIntentos<br/>5 por minuto por IP]
+    L -- excedido --> X429[/429 Demasiados intentos/]
+    L --> OK
+    E -- No --> F{requiereSesion:<br/>¿cookie sesion con<br/>JWT valido?}
+    F -- No --> X401[/401 Inicia sesion/]
+    F -- Si --> G{permitirRoles:<br/>¿el rol puede<br/>abrir el modulo?}
+    G -- No --> X403[/403 Tu rol no tiene acceso/]
+    G -- Si --> OK[Ruta → servicio<br/>consultas con ?]
+    OK --> H{¿Hubo error?}
+    H -- No --> R200[/200 JSON/]
+    H -- Si --> M[manejadorErrores]
+    M --> X4xx[/400 JSON invalido o dato malo<br/>404 ruta inexistente<br/>409 duplicado/]

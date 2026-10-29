@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor C as Cajero / Cliente
+    participant A as Angular (ventas)
+    participant B as Backend /api/paypal
+    participant V as venta.service
+    participant P as PayPal API sandbox
+    participant DB as MySQL
+
+    A->>B: GET /config
+    B-->>A: clientId (el secret no sale del servidor)
+    A->>P: carga SDK js y pinta botones
+    C->>A: clic en PayPal
+    A->>B: POST /orden {productos: id y cantidad}
+    B->>V: calcularTotales()
+    V->>DB: SELECT precio, existencia
+    DB-->>V: precios reales
+    B->>P: POST /v1/oauth2/token (client id + secret)
+    P-->>B: access_token
+    B->>P: POST /v2/checkout/orders {total MXN}
+    P-->>B: id de la orden
+    B-->>A: id
+    C->>P: inicia sesion y aprueba el pago
+    P-->>A: onApprove(orderID)
+    A->>B: POST /captura {idOrden, productos, idCliente}
+    B->>P: POST /v2/checkout/orders/{id}/capture
+    P-->>B: status COMPLETED + id de captura
+    alt pago completado
+        B->>V: crearVenta(formaPago paypal, idPaypal)
+        V->>DB: INSERT venta, detalle y movimiento, UPDATE existencia y puntos
+        B-->>A: folio PL-n y total
+    else no completado
+        B-->>A: 402 PayPal no completo el pago
+    end

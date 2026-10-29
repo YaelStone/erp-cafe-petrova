@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+    actor U as Cajero
+    participant A as Angular
+    participant L as limitarIntentos
+    participant R as usuario.routes
+    participant S as usuario.service
+    participant DB as MySQL
+    participant M as requiereSesion + permitirRoles
+
+    U->>A: correo y contrasena
+    A->>L: POST /api/usuarios/login
+    alt mas de 5 intentos en 1 minuto
+        L-->>A: 429 Demasiados intentos
+    else
+        L->>R: siguiente()
+        R->>S: login(correo, contrasena)
+        S->>DB: SELECT ... WHERE correo = ?
+        DB-->>S: usuario con hash
+        S->>S: bcrypt.compare()
+        alt no coincide
+            R-->>A: 401 Usuario o contrasena incorrectos
+        else coincide
+            R->>R: jwt.sign({id, idEmpleado, rol}, 8h)
+            R-->>A: 200 + Set-Cookie sesion (httpOnly, sameSite lax)
+            A->>A: sesion.usuario.set() y menu por rol
+        end
+    end
+    U->>A: abre Finanzas
+    A->>A: rolGuard revisa modulos.ts → redirige a /inicio
+    A->>M: GET /api/finanzas/balance (cookie)
+    M->>M: jwt.verify() y rol = cajero
+    M-->>A: 403 Tu rol no tiene acceso a este modulo

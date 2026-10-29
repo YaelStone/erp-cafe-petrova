@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Factura folio="PL-7" fecha="2026-10-28" moneda="MXN" formaPago="efectivo">
+  <Emisor nombre="Cafe Petrova Line" rfc="CPL260101AB1" regimen="601" lugarExpedicion="44100"/>
+  <Receptor nombre="Rocky Grace" rfc="XAXX010101000" correo="rocky@eridani.mx"/>
+  <Atendio nombre="R. Grace"/>
+  <Conceptos>
+    <Concepto clave="P-001" descripcion="Astrophage Latte" cantidad="2" valorUnitario="62.00" importe="124.00"/>
+    <Concepto clave="P-008" descripcion="Muffin Hail Mary" cantidad="1" valorUnitario="42.00" importe="42.00"/>
+  </Conceptos>
+  <Impuestos tipo="IVA" tasa="0.16" importe="26.56"/>
+  <Totales subtotal="166.00" iva="26.56" total="192.56"/>
+</Factura>

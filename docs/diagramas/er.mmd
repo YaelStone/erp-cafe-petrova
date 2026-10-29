@@ -1,0 +1,82 @@
+erDiagram
+    EMPLEADO ||--o| USUARIO : "tiene cuenta"
+    EMPLEADO ||--o{ ROTACION : "cubre"
+    EMPLEADO ||--o{ VENTA : "registra"
+    CLIENTE |o--o{ VENTA : "compra"
+    VENTA ||--|{ DETALLE_VENTA : "contiene"
+    PRODUCTO ||--o{ DETALLE_VENTA : "se vende"
+    PROVEEDOR ||--o{ COMPRA : "surte"
+    COMPRA ||--|{ DETALLE_COMPRA : "contiene"
+    PRODUCTO ||--o{ DETALLE_COMPRA : "se compra"
+    PRODUCTO ||--o{ MERMA : "pierde"
+
+    EMPLEADO { int id_empleado PK
+        varchar nombre
+        varchar puesto
+        varchar telefono
+        date fecha_ingreso
+        decimal sueldo_hora }
+    USUARIO { int id_usuario PK
+        int id_empleado FK
+        varchar correo UK
+        varchar contrasena "hash bcrypt"
+        varchar rol
+        tinyint activo }
+    CLIENTE { int id_cliente PK
+        varchar nombre
+        varchar telefono
+        varchar correo
+        int puntos }
+    PRODUCTO { int id_producto PK
+        varchar codigo UK
+        varchar nombre
+        varchar temperatura
+        int kcal
+        decimal precio
+        int existencia
+        int stock_minimo }
+    VENTA { int id_venta PK
+        int id_empleado FK
+        int id_cliente FK
+        date fecha
+        decimal subtotal
+        decimal iva
+        decimal total
+        varchar forma_pago
+        varchar id_pago_paypal }
+    DETALLE_VENTA { int id_detalle PK
+        int id_venta FK
+        int id_producto FK
+        int cantidad
+        decimal precio_unitario }
+    PROVEEDOR { int id_proveedor PK
+        varchar nombre
+        varchar telefono
+        varchar correo }
+    COMPRA { int id_compra PK
+        int id_proveedor FK
+        date fecha
+        decimal total
+        varchar estado
+        varchar pago }
+    DETALLE_COMPRA { int id_detalle_compra PK
+        int id_compra FK
+        int id_producto FK
+        int cantidad
+        decimal costo_unitario }
+    MERMA { int id_merma PK
+        int id_producto FK
+        int cantidad
+        varchar motivo
+        date fecha }
+    MOVIMIENTO { int id_movimiento PK
+        varchar tipo
+        varchar categoria
+        varchar concepto
+        decimal monto
+        date fecha }
+    ROTACION { int id_rotacion PK
+        int id_empleado FK
+        varchar dia
+        time hora_inicio
+        time hora_fin }

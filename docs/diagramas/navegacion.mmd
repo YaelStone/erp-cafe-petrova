@@ -1,0 +1,33 @@
+flowchart TB
+    L["/login"] -- "credenciales validas" --> I["/inicio<br/>tarjetas segun el rol"]
+    L -- "error" --> L
+    I --> V["/ventas"]
+    I --> CL["/clientes"]
+    I --> INV["/inventario"]
+    I --> CMP["/compras"]
+    I --> FIN["/finanzas"]
+    I --> TRI["/tripulacion"]
+    I --> USR["/usuarios"]
+    V -. "PayPal" .-> PP[["Ventana de PayPal"]]
+    PP -. "aprobado" .-> V
+    V -. "XML / Enviar" .-> X[["factura-PL-n.xml"]]
+    X -.-> COR[["Correo del cliente"]]
+
+    subgraph R1["cajero"]
+        V
+        CL
+    end
+    subgraph R2["almacenista"]
+        INV
+        CMP
+    end
+    subgraph R3["tripulacion"]
+        TRI
+    end
+    subgraph R4["solo comandante"]
+        FIN
+        USR
+    end
+    I -- "Salir" --> L
+    Z["ruta sin permiso"] -- "rolGuard" --> I
+    N["sin sesion o 401"] -- "sesionGuard / interceptor" --> L

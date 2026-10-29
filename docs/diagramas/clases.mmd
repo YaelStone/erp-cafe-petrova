@@ -1,0 +1,100 @@
+classDiagram
+    direction LR
+    class Usuario {
+        +idUsuario: number
+        +correo: string
+        +rol: string
+        +activo: boolean
+        +idEmpleado: number
+        +desdeFila(f) Usuario
+    }
+    class Empleado {
+        +idEmpleado: number
+        +nombre: string
+        +puesto: string
+        +telefono: string
+        +sueldoHora: number
+        +fechaIngreso: string
+    }
+    class Rotacion {
+        +idRotacion: number
+        +idEmpleado: number
+        +dia: string
+        +horaInicio: string
+        +horaFin: string
+    }
+    class Cliente {
+        +idCliente: number
+        +nombre: string
+        +telefono: string
+        +correo: string
+        +puntos: number
+        +nivelAmaze() string
+    }
+    class Producto {
+        +idProducto: number
+        +codigo: string
+        +nombre: string
+        +temperatura: string
+        +kcal: number
+        +precio: number
+        +existencia: number
+        +stockMinimo: number
+    }
+    class Venta {
+        +idVenta: number
+        +fechaHora: string
+        +formaPago: string
+        +idCliente: number
+        +detalles: DetalleVenta[]
+        +subtotal() number
+        +iva() number
+        +calcularTotal() number
+        +paraEnviar() object
+    }
+    class DetalleVenta {
+        +idProducto: number
+        +nombre: string
+        +cantidad: number
+        +precioUnitario: number
+        +importe() number
+    }
+    class Proveedor {
+        +idProveedor: number
+        +nombre: string
+        +telefono: string
+        +correo: string
+    }
+    class Compra {
+        +idCompra: number
+        +idProveedor: number
+        +fecha: string
+        +estado: string
+        +pago: string
+        +total: number
+    }
+    class Movimiento {
+        +idMovimiento: number
+        +tipo: string
+        +categoria: string
+        +concepto: string
+        +monto: number
+        +fecha: string
+    }
+    class Merma {
+        +idMerma: number
+        +cantidad: number
+        +motivo: string
+        +fecha: string
+    }
+    Empleado "1" -- "0..1" Usuario : accede con
+    Empleado "1" -- "*" Rotacion : cubre
+    Empleado "1" -- "*" Venta : registra
+    Cliente "0..1" -- "*" Venta : acumula puntos
+    Venta "1" *-- "1..*" DetalleVenta : contiene
+    DetalleVenta "*" --> "1" Producto
+    Proveedor "1" -- "*" Compra : surte
+    Compra "*" --> "*" Producto : recibe
+    Producto "1" -- "*" Merma
+    Venta ..> Movimiento : genera ingreso
+    Compra ..> Movimiento : genera egreso al pagar

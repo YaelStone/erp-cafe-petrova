@@ -1,0 +1,21 @@
+flowchart TB
+    A([Inicio]) --> B[Cajero agrega productos y cantidades]
+    B --> C{¿Hay existencia<br/>suficiente?}
+    C -- No --> B1[Aviso: solo quedan n] --> B
+    C -- Si --> D[Elige cliente Amaze o publico en general]
+    D --> E{Forma de pago}
+    E -- Efectivo --> F{¿Recibido ≥ total?}
+    F -- No --> F1[Aviso: no alcanza] --> E
+    F -- Si --> G[POST /api/ventas]
+    E -- Tarjeta / Transferencia --> G
+    E -- PayPal --> P1[Crear orden en PayPal] --> P2{¿Cliente aprueba?}
+    P2 -- No --> E
+    P2 -- Si --> P3[Capturar pago] --> G2[crearVenta forma paypal]
+    G --> H[Servidor recalcula precios,<br/>guarda venta y detalle]
+    G2 --> H
+    H --> I[Descuenta existencia, registra ingreso<br/>y suma puntos al cliente]
+    I --> J[Folio PL-n en pantalla]
+    J --> K{¿Factura?}
+    K -- Descargar --> K1[GET xml] --> Z
+    K -- Enviar --> K2[Nodemailer manda el XML al correo] --> Z
+    K -- No --> Z([Fin])

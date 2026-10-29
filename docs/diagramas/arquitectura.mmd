@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph NAV["Navegador · Angular 22 (puerto 4200)"]
+        P[Pantallas<br/>login, inicio y 7 modulos]
+        G[sesionGuard · rolGuard<br/>modulos.ts]
+        I[sesionInterceptor<br/>401 → /login]
+        A[ApiService<br/>withCredentials]
+        P --> G --> A --> I
+    end
+    subgraph SRV["Servidor · Node.js + Express (puerto 3200)"]
+        M1[cors · json · cookieParser<br/>cabeceras de seguridad]
+        M2[requiereSesion<br/>JWT en cookie httpOnly]
+        M3[permitirRoles]
+        R[routes/*.routes.js]
+        S[services/*.service.js]
+        E[manejadorErrores]
+        M1 --> M2 --> M3 --> R --> S
+        R -.-> E
+    end
+    DB[(MySQL · petrova_erp<br/>12 tablas)]
+    PP[[PayPal REST v2<br/>sandbox]]
+    SM[[Servidor SMTP<br/>Gmail / Ethereal]]
+    I -- "/api (proxy)" --> M1
+    S -- "mysql2 consultas con ?" --> DB
+    S -- "OAuth2 + orders + capture" --> PP
+    S -- "Nodemailer + factura.xml" --> SM
