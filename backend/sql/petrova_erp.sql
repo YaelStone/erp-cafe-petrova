@@ -157,14 +157,14 @@ INSERT INTO producto (codigo, nombre, temperatura, kcal, precio, existencia, sto
 ('P-008', 'Muffin Hail Mary', 'solido', 380, 42.00, 18, 6);
 
 INSERT INTO cliente (nombre, telefono, correo, puntos) VALUES
-('Rocky Grace', '3311223344', 'rocky@eridani.mx', 120),
-('Dani Lokken', '3319876543', 'dani@petrova.mx', 540),
-('Carl Dubois', '3315550101', 'carl@astro.mx', 210);
+('Rocky Grace', '3311223344', 'rocky.grace@example.com', 120),
+('Dani Lokken', '3319876543', 'dani.lokken@example.com', 540),
+('Carl Dubois', '3315550101', 'carl.dubois@example.com', 210);
 
 INSERT INTO proveedor (nombre, telefono, correo) VALUES
-('Cafes del Norte', '3344556677', 'ventas@cafesnorte.com'),
-('Lacteos Tau', '3355667788', 'pedidos@lacteostau.com'),
-('Panaderia Orbital', '3366778899', 'hola@orbital.mx');
+('Cafes del Norte', '3344556677', 'ventas.cafesnorte@example.com'),
+('Lacteos Tau', '3355667788', 'pedidos.lacteostau@example.com'),
+('Panaderia Orbital', '3366778899', 'hola.orbital@example.com');
 
 INSERT INTO compra (id_proveedor, fecha, total, estado, pago) VALUES
 (1, CURDATE() - INTERVAL 8 DAY, 3200.00, 'recibido', 'pagado'),
