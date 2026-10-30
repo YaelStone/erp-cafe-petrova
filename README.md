@@ -34,6 +34,10 @@ Francisco Yael Pérez Palacios · 23300664
 
 ## Cómo correrlo
 
+**Rápido (Windows con XAMPP):** doble clic en `iniciar.bat`. Prende MySQL, el backend y el frontend y abre el navegador.
+
+**Paso por paso:**
+
 1. Importa `backend/sql/petrova_erp.sql` en phpMyAdmin (crea la base `petrova_erp`).
 2. Backend:
 
