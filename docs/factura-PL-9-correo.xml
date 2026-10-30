@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Factura folio="PL-8" fecha="2026-10-29" moneda="MXN" formaPago="efectivo">
+<Factura folio="PL-9" fecha="2026-10-29" moneda="MXN" formaPago="efectivo">
   <Emisor nombre="Cafe Petrova Line" rfc="CPL260101AB1" regimen="601" lugarExpedicion="44100"/>
-  <Receptor nombre="Rocky Grace" rfc="XAXX010101000" correo="rocky.grace@example.com"/>
+  <Receptor nombre="Francisco Yael Perez" rfc="XAXX010101000" correo="a23300664@ceti.mx"/>
   <Atendio nombre="R. Grace"/>
   <Conceptos>
     <Concepto clave="P-001" descripcion="Astrophage Latte" cantidad="2" valorUnitario="62.00" importe="124.00"/>
