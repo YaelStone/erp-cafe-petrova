@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Factura folio="PL-7" fecha="2026-10-29" moneda="MXN" formaPago="paypal" idPagoPaypal="2N097847KK360202S">
+  <Emisor nombre="Cafe Petrova Line" rfc="CPL260101AB1" regimen="601" lugarExpedicion="44100"/>
+  <Receptor nombre="Publico en general" rfc="XAXX010101000" correo=""/>
+  <Atendio nombre="Ilyukhina Petrova"/>
+  <Conceptos>
+    <Concepto clave="P-001" descripcion="Astrophage Latte" cantidad="1" valorUnitario="62.00" importe="62.00"/>
+  </Conceptos>
+  <Impuestos tipo="IVA" tasa="0.16" importe="9.92"/>
+  <Totales subtotal="62.00" iva="9.92" total="71.92"/>
+</Factura>

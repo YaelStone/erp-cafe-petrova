@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Factura folio="PL-7" fecha="2026-10-29" moneda="MXN" formaPago="efectivo">
+<Factura folio="PL-8" fecha="2026-10-29" moneda="MXN" formaPago="efectivo">
   <Emisor nombre="Cafe Petrova Line" rfc="CPL260101AB1" regimen="601" lugarExpedicion="44100"/>
   <Receptor nombre="Rocky Grace" rfc="XAXX010101000" correo="rocky.grace@example.com"/>
   <Atendio nombre="R. Grace"/>
